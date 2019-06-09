@@ -1,0 +1,15 @@
+ .field-setting-button{
+    
+    display: inline-block;
+    float:right;
+}
+.dndPlaceholder{
+    background-color: #CFE8F5;
+    border-radius: 4px;
+    display: block;
+    height: 40px;
+    width: 100%;
+}
+> ul[dnd-list] > div.dndPlaceholder > div {
+    
+}

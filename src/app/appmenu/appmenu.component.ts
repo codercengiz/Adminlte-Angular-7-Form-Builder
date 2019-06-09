@@ -10,6 +10,9 @@ export class AppmenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    
+
   }
 
 }
