@@ -21,6 +21,16 @@ export class GlobalField {
     listitems?:Array<FieldsValue>;
     designclass?:string;
     category?: FieldCategory=FieldCategory.Basic;
+    isContainer?:boolean=false;
+    childs?:Array<GlobalField>;
+
+    
+    //panel box
+    closebutton?:boolean;
+    minimizebutton?:boolean;
+
+    //tabcontainer
+    tabheaderclassName?:string;
 }
 export class FieldsValue{
     id?:any="";

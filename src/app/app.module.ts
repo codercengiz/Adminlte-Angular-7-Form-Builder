@@ -10,6 +10,7 @@ import { AppsettingComponent } from './appsetting/appsetting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormCreateComponent } from './pages/form-create/form-create.component';
 import { DndModule } from 'ngx-drag-drop';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DndModule } from 'ngx-drag-drop';
     BrowserModule,
     AppRoutingModule,
     DragDropModule,
-    DndModule
+    DndModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

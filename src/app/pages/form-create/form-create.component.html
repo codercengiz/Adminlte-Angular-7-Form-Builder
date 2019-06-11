@@ -28,8 +28,8 @@
                     <div class="fields" *ngFor="let item of fieldModels">
                       <div class="field pointer shadow-bg" [dndDraggable]="item" [dndEffectAllowed]="'copy'"
                         (dndEnd)="onDragEnd($event)">
-                        <a  [ngClass]="item.designclass" class="btn btn-block btn-social"><i
-                            [ngClass]="item.icon" class="fa "></i>
+                        <a [ngClass]="item.designclass" class="btn btn-block btn-social"><i [ngClass]="item.icon"
+                            class="fa "></i>
                           {{item.label}}</a>
                       </div>
                     </div>
@@ -63,6 +63,7 @@
                 <div id="collapseThree" class="panel-collapse collapse in" aria-expanded="true" style="">
                   <div class="box-body">
                     <div cdkDropList>
+                      <button type="button" class="btn btn-default" (click)="openModal"> deneme</button>
                       <a cdkDrag class="btn btn-block btn-social btn-bitbucket"><i class="fa fa-columns"></i>
                         Columns</a>
                       <a cdkDrag class="btn btn-block btn-social btn-dropbox"><i class="fa fa-closed-captioning"></i>
@@ -81,631 +82,298 @@
       </div>
       <div class="col-md-10">
         <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Form</h3>
-            <div class="box-body">
+            <div class="box-header with-border">
+                <h3 class="box-title">Form</h3>
+              </div>
+          
+            
 
+              <form role="form" [formGroup]="customForm">
+                <div dndDropzone (dndDragover)="onDragover($event)" (dndDrop)="onDrop($event,model.fields)"
+                  class="dndDropArea box-body" [ngClass]="{'empty':model.fields.length == 0}"
+                  [style.backgroundColor]="model.theme.bgColor" [style.color]="model.theme.textColor"
+                  style="min-height: 200px;">
 
-              <section dndDropzone (dndDragover)="onDragover($event)" (dndDrop)="onDrop($event,model.attributes)" class="dndDropArea"
-                class="dndDropArea" [ngClass]="{'empty':model.attributes.length == 0}"
-                [style.backgroundColor]="model.theme.bgColor" [style.color]="model.theme.textColor"
-                style="min-height: 200px;">
-                <form role="form">
-                <div class="field" *ngFor="let item of model.attributes;let i= index;" (dndStart)="onDragStart($event)"
-                  (dndCanceled)="onDragCanceled($event)" (dndMoved)="onDragged(item, model.attributes, 'move')"
-                  [dndEffectAllowed]="'all'" [dndDraggable]="item">
-
-
-                    <div class="box-body">
-                      <div class="form-group">
-                        <!-- <i [ngClass]="item.icon" class="fa pull-left"></i>
-                      <h5>{{item.label}}
-                      <span *ngIf="item.required" class="red">*</span></h5> -->
-                        <div *ngIf="item.type=='text'" (mouseover)="hover=true" (mouseleave)="hover=false">
-                          <div><label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                            <div class="field-setting-button"
-                              [ngStyle]="{visibility: hover==true  ? 'visible' : 'hidden' }">
-                              <a class="btn btn-social-icon " style="height: 24px; width:24px"><i class="fa fa-trash"
-                                  style="line-height: 24px; font-size: 0.8em;"></i></a>
-                              <a class="btn btn-social-icon " style="height: 24px; width:24px"><i class="fa fa-cog"
-                                  style="line-height: 24px; font-size: 0.8em;"></i></a>
-                              <a class="btn btn-social-icon " style="height: 24px; width:24px"><i
-                                  class="fa fa-ellipsis-v dndHandle" dndHandle
-                                  style="line-height: 24px; font-size: 0.8em;"></i></a>
-
-                            </div>
-                          </div>
-                          <input type="text" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
-                        </div>
-                        <div *ngIf="item.type=='email'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <input type="email" class="form-control" id="{{item.name}}"
-                            placeholder="{{item.placeholder}}">
-                        </div>
-                        <div *ngIf="item.type=='phone'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <input type="text" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
-                        </div>
-                        <div *ngIf="item.type=='number'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <input type="number" class="form-control" id="{{item.name}}" min="{{item.min}}"
-                            max="{{item.max}}" placeholder="{{item.placeholder}}">
-                        </div>
-                        <div *ngIf="item.type=='date'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <input type="date" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
-                        </div>
-                        <div *ngIf="item.type=='datetime-local'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <input type="datetime-local" class="form-control" id="{{item.name}}"
-                            placeholder="{{item.placeholder}}">
-                        </div>
-                        <div *ngIf="item.type=='textarea'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <textarea class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
-                                </textarea>
-                        </div>
-                        <div *ngIf="item.type=='file'">
-                          <label>{{item.label}} (File can't be uploaded right now)</label> <label *ngIf="item.required"
-                            class="text-danger">*</label>
-                          <input type="file" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
-                          <small class="form-text text-danger">(File can't be uploaded right now)</small>
-                        </div>
-                        <div *ngIf="item.type=='paragraph'">
-                          <p class="form-text">{{item.placeholder}}</p>
-                        </div>
-                        <div *ngIf="item.type=='autocomplete'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <select class="form-control" id="{{item.name}}">
-                            <option *ngFor="let v of item.listitems" [value]="v.value">{{v.label}}</option>
-                          </select>
-                          <!-- <small class="form-text text-muted">{{item.description}}</small> -->
-                        </div>
-                        <div *ngIf="item.type=='checkbox'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <div *ngFor="let v of item.listitems" class="inline-form-group">
-                            <label class="cust-check-bx">
-                              <input type="checkbox" [value]="v.value" name="{{item.name}}" (click)="toggleValue(v)">
-                              {{v.label}}
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        </div>
-                        <div *ngIf="item.type=='radio'">
-                          <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
-                          <div *ngFor="let v of item.listitems" class="inline-form-group">
-                            <label class="cust-check-bx">
-                              <input type="radio" [value]="v.value" name="{{item.name}}"> {{v.label}}
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        </div>
-                        <div *ngIf="item.type=='button'" class="btn-cont">
-                          <input type="{{item.subtype}}" (click)="submit()" value="{{item.label}}"
-                            class="btn btn-primary" id="{{item.name}}">
-                        </div>
-                      </div>
-
-                    </div>
-
-
-                    <!-- number -->
-
-
-                    <!-- radio || checkbox || autocomplete -->
-                    <div *ngIf="item.type=='radio'|| item.type=='checkbox' || item.type=='autocomplete'">
-                      <div class="row">
-                        <div class="col-5">
-                          <div class="form-group">
-                            <label>Label</label>
-                          </div>
-                        </div>
-                        <div class="col-5">
-                          <div class="form-group">
-                            <label>Value</label>
-                          </div>
-                        </div>
-                        <div class="col-2">
-                          <div class="form-group">
-                            <label>Action</label>
-                          </div>
-                        </div>
-                      </div>
-
-
-                    </div>
-
-
-
-
-
-
-                    <!--optional placeholder element for dropzone-->
-                    <!--will be removed from DOM on init-->
-                    
-
-                  
+                  <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: model.fields }">
+                  </ng-container>
 
 
                 </div>
-
-
-                  </form>
-<div class="dndPlaceholder" dndPlaceholderRef>
-                    </div>
-              </section>
-
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              </form>
 
 
 
 
+            
 
-            </div>
-
-          </div>
+          
         </div>
       </div>
     </div>
-    <div class="row">
-      <!-- left column -->
-      <div class="col-md-6">
-        <!-- general form elements -->
-        <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Quick Example</h3>
-          </div>
-          <!-- /.box-header -->
-          <!-- form start -->
-          <form role="form">
-            <div class="box-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <input type="file" id="exampleInputFile">
 
-                <p class="help-block">Example block-level help text here.</p>
+
+
+
+
+
+
+    <ng-template #recursiveListTmpl let-list>
+      <div class="field" *ngFor="let item of list;let i= index;" (dndStart)="onDragStart($event)"
+        (dndCanceled)="onDragCanceled($event)" (dndMoved)="onDragged(item, list, 'move')" [dndEffectAllowed]="'all'"
+        [dndDraggable]="item">
+
+
+
+        <div >
+          <div class="form-group">
+            <!-- <i [ngClass]="item.icon" class="fa pull-left"></i>
+                      <h5>{{item.label}}
+                      <span *ngIf="item.required" class="red">*</span></h5> -->
+            <div *ngIf="item.type=='text'" (mouseover)="hover=true" (mouseleave)="hover=false">
+              <div><label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+                <div class="field-setting-button" [ngStyle]="{visibility: hover==true  ? 'visible' : 'hidden' }">
+                  <a class="btn btn-social-icon " style="height: 24px; width:24px"><i class="fa fa-trash"
+                      style="line-height: 24px; font-size: 0.8em;"></i></a>
+                  <a class="btn btn-social-icon " style="height: 24px; width:24px"><i class="fa fa-cog"
+                      style="line-height: 24px; font-size: 0.8em;"></i></a>
+                  <a class="btn btn-social-icon " style="height: 24px; width:24px"><i class="fa fa-ellipsis-v dndHandle"
+                      dndHandle style="line-height: 24px; font-size: 0.8em;"></i></a>
+
+                </div>
               </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Check me out
+              <input type="text" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
+            </div>
+
+
+            <div *ngIf="item.type=='row'" >
+
+              <div class="row">
+                <div *ngFor="let column of item.childs;let i= index;" dndDropzone style=" min-height:80px"
+                  (dndDragover)="onDragover($event)" (dndDrop)="onDrop($event,column.childs)" class="col-md-6">
+                  <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: column.childs }">
+                  </ng-container>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div *ngIf="item.type=='tabcontainer'" >
+
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+
+                      <li *ngFor="let tab of item.childs;let i= index;" [ngClass]="tab.tabheaderclassName"><a href="#{{tab.id}}" data-toggle="tab">{{tab.label}}</a></li>
+                      
+                      
+                      <li class="pull-left header"><i class="fa fa-th"></i> {{item.label}}</li>
+                    </ul>
+                    <div class="tab-content">
+                      <div *ngFor="let tab of item.childs" class="tab-pane" [ngClass]="tab.tabheaderclassName" [id]="tab.id"  dndDropzone style=" min-height:80px"
+                      (dndDragover)="onDragover($event)" (dndDrop)="onDrop($event,tab.childs)" >
+                      
+                        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: tab.childs }">
+                          </ng-container>
+
+
+                      </div>
+                      <!-- /.tab-pane -->
+                     
+                      <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                  </div>
+
+  
+              </div>
+
+
+
+            <div *ngIf="item.type=='panelbox'">
+
+                <div  class="box box-danger" [ngClass]="item.className">
+                    <div class="box-header">
+                      <h3 class="box-title">{{item.label}}</h3>
+                      <div class="box-tools pull-right">
+                        <button *ngIf="item.minimizebutton" type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                            class="fa fa-minus"></i></button>
+                        <button *ngIf="item.closebutton" type="button" class="btn btn-box-tool" data-widget="remove"><i
+                            class="fa fa-remove"></i></button>
+                      </div>
+                    </div>
+                    <div class="box-body" dndDropzone style=" min-height:80px"
+                    (dndDragover)="onDragover($event)" (dndDrop)="onDrop($event,item.childs)">
+
+                      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ $implicit: item.childs }">
+                      </ng-container>
+
+                    </div>
+
+                  </div>
+            </div>
+            <div *ngIf="item.type=='email'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <input type="email" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
+            </div>
+            <div *ngIf="item.type=='phone'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <input type="text" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
+            </div>
+            <div *ngIf="item.type=='number'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <input type="number" class="form-control" id="{{item.name}}" min="{{item.min}}" max="{{item.max}}"
+                placeholder="{{item.placeholder}}">
+            </div>
+            <div *ngIf="item.type=='date'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <input type="date" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
+            </div>
+            <div *ngIf="item.type=='datetime-local'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <input type="datetime-local" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
+            </div>
+            <div *ngIf="item.type=='textarea'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <textarea class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
+                                </textarea>
+            </div>
+            <div *ngIf="item.type=='file'">
+              <label>{{item.label}} (File can't be uploaded right now)</label> <label *ngIf="item.required"
+                class="text-danger">*</label>
+              <input type="file" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
+              <small class="form-text text-danger">(File can't be uploaded right now)</small>
+            </div>
+            <div *ngIf="item.type=='paragraph'">
+              <p class="form-text">{{item.placeholder}}</p>
+            </div>
+            <div *ngIf="item.type=='autocomplete'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <select class="form-control" id="{{item.name}}">
+                <option *ngFor="let v of item.listitems" [value]="v.value">{{v.label}}</option>
+              </select>
+              <!-- <small class="form-text text-muted">{{item.description}}</small> -->
+            </div>
+            <div *ngIf="item.type=='checkbox'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <div *ngFor="let v of item.listitems" class="inline-form-group">
+                <label class="cust-check-bx">
+                  <input type="checkbox" [value]="v.value" name="{{item.name}}" (click)="toggleValue(v)">
+                  {{v.label}}
+                  <span class="checkmark"></span>
                 </label>
               </div>
             </div>
-            <!-- /.box-body -->
-
-            <div class="box-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+            <div *ngIf="item.type=='radio'">
+              <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+              <div *ngFor="let v of item.listitems" class="inline-form-group">
+                <label class="cust-check-bx">
+                  <input type="radio" [value]="v.value" name="{{item.name}}"> {{v.label}}
+                  <span class="checkmark"></span>
+                </label>
+              </div>
             </div>
-          </form>
+            <div *ngIf="item.type=='button'" class="btn-cont">
+              <input type="{{item.subtype}}" (click)="submit()" value="{{item.label}}" class="btn btn-primary"
+                id="{{item.name}}">
+            </div>
+          </div>
+
         </div>
-        <!-- /.box -->
 
-        <!-- Form Element sizes -->
-        <div class="box box-success">
-          <div class="box-header with-border">
-            <h3 class="box-title">Different Height</h3>
+
+        <!-- number -->
+
+
+        <!-- radio || checkbox || autocomplete -->
+        <div *ngIf="item.type=='radio'|| item.type=='checkbox' || item.type=='autocomplete'">
+          <div class="row">
+            <div class="col-5">
+              <div class="form-group">
+                <label>Label</label>
+              </div>
+            </div>
+            <div class="col-5">
+              <div class="form-group">
+                <label>Value</label>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="form-group">
+                <label>Action</label>
+              </div>
+            </div>
           </div>
-          <div class="box-body">
-            <input class="form-control input-lg" type="text" placeholder=".input-lg">
-            <br>
-            <input class="form-control" type="text" placeholder="Default input">
-            <br>
-            <input class="form-control input-sm" type="text" placeholder=".input-sm">
-          </div>
-          <!-- /.box-body -->
+
+
         </div>
-        <!-- /.box -->
 
-        <div class="box box-danger">
-          <div class="box-header with-border">
-            <h3 class="box-title">Different Width</h3>
-          </div>
-          <div class="box-body">
-            <div class="row">
-              <div class="col-xs-3">
-                <input type="text" class="form-control" placeholder=".col-xs-3">
-              </div>
-              <div class="col-xs-4">
-                <input type="text" class="form-control" placeholder=".col-xs-4">
-              </div>
-              <div class="col-xs-5">
-                <input type="text" class="form-control" placeholder=".col-xs-5">
-              </div>
-            </div>
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
 
-        <!-- Input addon -->
-        <div class="box box-info">
-          <div class="box-header with-border">
-            <h3 class="box-title">Input Addon</h3>
-          </div>
-          <div class="box-body">
-            <div class="input-group">
-              <span class="input-group-addon">@</span>
-              <input type="text" class="form-control" placeholder="Username">
-            </div>
-            <br>
 
-            <div class="input-group">
-              <input type="text" class="form-control">
-              <span class="input-group-addon">.00</span>
-            </div>
-            <br>
 
-            <div class="input-group">
-              <span class="input-group-addon">$</span>
-              <input type="text" class="form-control">
-              <span class="input-group-addon">.00</span>
-            </div>
 
-            <h4>With icons</h4>
 
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-              <input type="email" class="form-control" placeholder="Email">
-            </div>
-            <br>
+        <!--optional placeholder element for dropzone-->
+        <!--will be removed from DOM on init-->
 
-            <div class="input-group">
-              <input type="text" class="form-control">
-              <span class="input-group-addon"><i class="fa fa-check"></i></span>
-            </div>
-            <br>
 
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-              <input type="text" class="form-control">
-              <span class="input-group-addon"><i class="fa fa-ambulance"></i></span>
-            </div>
 
-            <h4>With checkbox and radio inputs</h4>
 
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <input type="checkbox">
-                  </span>
-                  <input type="text" class="form-control">
-                </div>
-                <!-- /input-group -->
-              </div>
-              <!-- /.col-lg-6 -->
-              <div class="col-lg-6">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                    <input type="radio">
-                  </span>
-                  <input type="text" class="form-control">
-                </div>
-                <!-- /input-group -->
-              </div>
-              <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
-
-            <h4>With buttons</h4>
-
-            <p class="margin">Large: <code>.input-group.input-group-lg</code></p>
-
-            <div class="input-group input-group-lg">
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Action
-                  <span class="fa fa-caret-down"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </div>
-              <!-- /btn-group -->
-              <input type="text" class="form-control">
-            </div>
-            <!-- /input-group -->
-            <p class="margin">Normal</p>
-
-            <div class="input-group">
-              <div class="input-group-btn">
-                <button type="button" class="btn btn-danger">Action</button>
-              </div>
-              <!-- /btn-group -->
-              <input type="text" class="form-control">
-            </div>
-            <!-- /input-group -->
-            <p class="margin">Small <code>.input-group.input-group-sm</code></p>
-
-            <div class="input-group input-group-sm">
-              <input type="text" class="form-control">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-info btn-flat">Go!</button>
-              </span>
-            </div>
-            <!-- /input-group -->
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
 
       </div>
-      <!--/.col (left) -->
-      <!-- right column -->
-      <div class="col-md-6">
-        <!-- Horizontal Form -->
-        <div class="box box-info">
-          <div class="box-header with-border">
-            <h3 class="box-title">Horizontal Form</h3>
+
+
+
+      <div class="dndPlaceholder" dndPlaceholderRef>
+      </div>
+
+
+
+
+
+
+
+
+
+    </ng-template>
+
+
+
+    <button type="button" class="btn btn-info btn-lg" (click)="openModal()">click to open</button>
+
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseHandled()">
+              <span aria-hidden="true">×</span></button>
+            <h4 class="modal-title">Field Setting</h4>
           </div>
-          <!-- /.box-header -->
-          <!-- form start -->
-          <form class="form-horizontal">
-            <div class="box-body">
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+          <div class="modal-body">
 
-                <div class="col-sm-10">
-                  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 
-                <div class="col-sm-10">
-                  <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox"> Remember me
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-              <button type="submit" class="btn btn-default">Cancel</button>
-              <button type="submit" class="btn btn-info pull-right">Sign in</button>
-            </div>
-            <!-- /.box-footer -->
-          </form>
-        </div>
-        <!-- /.box -->
-        <!-- general form elements disabled -->
-        <div class="box box-warning">
-          <div class="box-header with-border">
-            <h3 class="box-title">General Elements</h3>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            <form role="form">
-              <!-- text input -->
-              <div class="form-group">
-                <label>Text</label>
-                <input type="text" class="form-control" placeholder="Enter ...">
-              </div>
-              <div class="form-group">
-                <label>Text Disabled</label>
-                <input type="text" class="form-control" placeholder="Enter ..." disabled="">
-              </div>
 
-              <!-- textarea -->
-              <div class="form-group">
-                <label>Textarea</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-              </div>
-              <div class="form-group">
-                <label>Textarea Disabled</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..." disabled=""></textarea>
-              </div>
+            <form role="form" [formGroup]="fieldSettingForm" (ngSubmit)="onSubmit(fieldSettingForm.value)">
 
-              <!-- input states -->
-              <div class="form-group has-success">
-                <label class="control-label" for="inputSuccess"><i class="fa fa-check"></i> Input with success</label>
-                <input type="text" class="form-control" id="inputSuccess" placeholder="Enter ...">
-                <span class="help-block">Help block with success</span>
-              </div>
-              <div class="form-group has-warning">
-                <label class="control-label" for="inputWarning"><i class="fa fa-bell-o"></i> Input with
-                  warning</label>
-                <input type="text" class="form-control" id="inputWarning" placeholder="Enter ...">
-                <span class="help-block">Help block with warning</span>
-              </div>
-              <div class="form-group has-error">
-                <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> Input with
-                  error</label>
-                <input type="text" class="form-control" id="inputError" placeholder="Enter ...">
-                <span class="help-block">Help block with error</span>
-              </div>
 
-              <!-- checkbox -->
               <div class="form-group">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox">
-                    Checkbox 1
-                  </label>
-                </div>
-
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox">
-                    Checkbox 2
-                  </label>
-                </div>
-
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" disabled="">
-                    Checkbox disabled
-                  </label>
-                </div>
-              </div>
-
-              <!-- radio -->
-              <div class="form-group">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                    Option one is this and that—be sure to include why it's great
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                    Option two can be something else and selecting it will deselect option one
-                  </label>
-                </div>
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled="">
-                    Option three is disabled
-                  </label>
-                </div>
-              </div>
-
-              <!-- select -->
-              <div class="form-group">
-                <label>Select</label>
-                <select class="form-control">
-                  <option>option 1</option>
-                  <option>option 2</option>
-                  <option>option 3</option>
-                  <option>option 4</option>
-                  <option>option 5</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Select Disabled</label>
-                <select class="form-control" disabled="">
-                  <option>option 1</option>
-                  <option>option 2</option>
-                  <option>option 3</option>
-                  <option>option 4</option>
-                  <option>option 5</option>
-                </select>
-              </div>
-
-              <!-- Select multiple-->
-              <div class="form-group">
-                <label>Select Multiple</label>
-                <select multiple="" class="form-control">
-                  <option>option 1</option>
-                  <option>option 2</option>
-                  <option>option 3</option>
-                  <option>option 4</option>
-                  <option>option 5</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Select Multiple Disabled</label>
-                <select multiple="" class="form-control" disabled="">
-                  <option>option 1</option>
-                  <option>option 2</option>
-                  <option>option 3</option>
-                  <option>option 4</option>
-                  <option>option 5</option>
-                </select>
+                <label>Json Text</label>
+                <textarea class="form-control" rows="10" formControlName="jsontext" id="jsontext"
+                  placeholder="Enter ..." spellcheck="false"></textarea>
               </div>
 
             </form>
           </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-      </div>
-      <!--/.col (right) -->
-    </div>
-    <!-- /.row -->
-    <div>
-      <div class="row docs-premium-template">
-        <div class="col-sm-12 col-md-6">
-          <div class="box box-solid">
-            <div class="box-body">
-              <h4
-                style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
-                PREMIUM TEMPLATE
-              </h4>
-              <div class="media">
-                <div class="media-left">
-                  <a href="https://themequarry.com/theme/webadmin-responsive-admin-dashboard-template-ASFEDAA8"
-                    class="ad-click-event">
-                    <img src="https://themequarry.com/storage/images/approved/ASFEDAA8_v1.2.0_595b0b787d2e5.png"
-                      alt="Webadmin" class="media-object"
-                      style="width: 150px;height: auto;border-radius: 4px;box-shadow: 0 1px 3px rgba(0,0,0,.15);">
-                  </a>
-                </div>
-                <div class="media-body">
-                  <div class="clearfix">
-                    <p class="pull-right">
-                      <a href="https://themequarry.com/theme/webadmin-responsive-admin-dashboard-template-ASFEDAA8"
-                        class="btn btn-success btn-sm ad-click-event">
-                        LEARN MORE
-                      </a>
-                    </p>
-
-                    <h4 style="margin-top: 0">Webadmin ─ $18</h4>
-
-                    <p>Responsive Admin Dashboard</p>
-                    <p style="margin-bottom: 0">
-                      <i class="fa fa-shopping-cart margin-r5"></i> 320+ purchases
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default  pull-left" (click)="onCloseHandled()">Close</button>
+            <button type="submit" class="btn btn-primary" (click)="onSubmit(fieldSettingForm.value)">Save
+              changes</button>
           </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <div class="box box-solid">
-            <div class="box-body">
-              <h4
-                style="background-color:#f7f7f7; font-size: 18px; text-align: center; padding: 7px 10px; margin-top: 0;">
-                PREMIUM TEMPLATE
-              </h4>
-              <div class="media">
-                <div class="media-left">
-                  <a href="https://dashboardpack.com/theme-details/kero-jquery-html-dashboard-pro&amp;utm_source=adminlte&amp;utm_medium=frontpage"
-                    class="ad-click-event">
-                    <img src="/uploads/images/frontpage/kero-html-pro-screenshot.jpg" alt="Kero" class="media-object"
-                      style="width: 150px;height: auto;border-radius: 4px;box-shadow: 0 1px 3px rgba(0,0,0,.15);">
-                  </a>
-                </div>
-                <div class="media-body">
-                  <div class="clearfix">
-                    <p class="pull-right">
-                      <a href="https://dashboardpack.com/theme-details/kero-jquery-html-dashboard-pro&amp;utm_source=adminlte&amp;utm_medium=frontpage"
-                        class="btn btn-success btn-sm ad-click-event">
-                        LEARN MORE
-                      </a>
-                    </p>
-
-                    <h4 style="margin-top: 0">Kero ─ $49</h4>
-
-                    <p> Bootstrap 4 Admin Dashboard Template</p>
-                    <p style="margin-bottom: 0">
-                      <i class="fa fa-shopping-cart margin-r5"></i> 500+ purchases
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal !-->

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {  GlobalField, FieldsValue , FieldCategory } from 'src/app/model/global-field';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
+import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-form-create',
@@ -9,11 +11,23 @@ import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
   styleUrls: ['./form-create.component.scss']
 })
 export class FormCreateComponent implements OnInit {
-
+  customForm  = new FormGroup({
+    
+  });
+  
+  
+  fieldSettingForm = new FormGroup({
+    jsontext: new FormControl(''),
+  });
+  
   constructor() { }
 
   ngOnInit() {
+    
   }
+  currentGlobalField:GlobalField= new GlobalField();
+  currentGlobalFieldJson:string = "";
+  display='none';
 hover:boolean=false;
   value:FieldsValue={
     id:"",
@@ -24,6 +38,7 @@ hover:boolean=false;
 
   fieldModels:Array<GlobalField>=[
     {
+      "id":"",
       "type": "text",
       "icon": "fa-terminal",
       "label": "Text",
@@ -35,6 +50,81 @@ hover:boolean=false;
       "handle":true,
       "category": FieldCategory.Basic,
       "designclass":"btn-bitbucket",
+    },
+    {
+      "type": "row",
+      "icon": "fa-columns",
+      "label": "Column",
+      
+      "className": "form-control",
+      "subtype": "text",
+     
+      "handle":true,
+      "category": FieldCategory.Layout,
+      "designclass":"btn-bitbucket",
+      isContainer:true,
+      "childs":[
+          {
+          "type": "column",
+            "className":"col-md-6",
+         
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-6",
+          
+          isContainer:true,
+          "childs":[],
+          }
+    
+    ],
+    },
+    {
+      "type": "panelbox",
+      "icon": "fa-columns",
+      "label": "Panel Box",
+        "minimizebutton":true,
+
+     
+      "handle":true,
+      "category": FieldCategory.Layout,
+      
+      isContainer:true,
+      "childs":[],
+    },
+    {
+      "type": "tabcontainer",
+      "icon": "fa-columns",
+      "label": "Deneme Tabs",
+      
+      "className": "form-control",
+      "subtype": "text",
+     
+      "handle":true,
+      "category": FieldCategory.Layout,
+      "designclass":"btn-bitbucket",
+      isContainer:true,
+      "childs":[
+          {
+          "type": "tab",
+         "label":"tab1",
+         "className": "active",
+         "tabheaderclassName": "active",
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "tab",
+          "label":"tab2",
+          
+          isContainer:true,
+          "childs":[],
+          }
+    
+    ],
     },
     {
       "type": "email",
@@ -193,7 +283,7 @@ hover:boolean=false;
       textColor:"555555",
       bannerImage:""
     },
-    attributes:this.modelFields
+    fields:this.modelFields
   };
 
   report = false;
@@ -231,16 +321,37 @@ hover:boolean=false;
   }
   
   onDrop( event:DndDropEvent, list?:any[] ) {
+    
     if( list && (event.dropEffect === "copy" || event.dropEffect === "move") ) {
       
-      if(event.dropEffect === "copy")
-      event.data.name = event.data.type+'-'+new Date().getTime();
+      if(event.dropEffect === "copy"){
+        event.data.name = event.data.type+'-'+new Date().getTime();
+        event.data.id=new Date().getTime();
+
+        if(event.data.type==="tabcontainer"){
+          let index:number=1;
+         let tabs:Array<GlobalField> = event.data.childs;
+            tabs.forEach(function (tab) {
+              index++;
+              tab.id=new Date().getTime()+index;
+            });
+
+        }
+
+      }
+      
       let index = event.index;
       if( typeof index === "undefined" ) {
         index = list.length;
       }
       list.splice( index, 0, event.data );
     }
+    this.currentGlobalField=event.data;
+    this.currentGlobalFieldJson=JSON.stringify(this.currentGlobalField, null, 4);
+    this.fieldSettingForm.setValue({jsontext:this.currentGlobalFieldJson});
+  
+    if( list && event.dropEffect === "copy")this.display='block';
+    console.log(this.currentGlobalField);
   }
   
   addValue(values){
@@ -280,7 +391,8 @@ hover:boolean=false;
     //   swal('Success','App updated successfully','success');
     // });
   }
-
+  
+  
 
   initReport(){
     this.report = true; 
@@ -300,12 +412,47 @@ hover:boolean=false;
     // });
   }
 
+  openModal(){
 
+
+    this.display='block'; 
+
+
+ }
+ onCloseHandled(){
+
+
+  this.display='none'; 
+
+
+}
+arrayUpdate( list:Array<GlobalField>, field:GlobalField){
+  list.forEach((item)=> {
+    if(item.id===field.id){
+      Object.assign(item,field);
+      
+      
+      return true;
+    }
+
+    if(item.childs !=null && item.childs.length>0){
+      this.arrayUpdate(item.childs,field);
+    }
+
+  });
+}
 
   toggleValue(item){
     item.selected = !item.selected;
   }
+  onSubmit(txt:any){
+    console.log(txt);
+    this.currentGlobalField= JSON.parse(txt.jsontext);
+    this.arrayUpdate(this.modelFields,this.currentGlobalField);
 
+    this.onCloseHandled();
+
+  }
   submit(){
     let valid = true;
     let validationArray = JSON.parse(JSON.stringify(this.model.attributes));
