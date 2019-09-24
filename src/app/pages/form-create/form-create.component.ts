@@ -49,7 +49,7 @@ hover:boolean=false;
       "regex" : "",
       "handle":true,
       "category": FieldCategory.Basic,
-      "designclass":"btn-bitbucket",
+      "designclass":"btn-foursquare",
     },
     {
       "type": "row",
@@ -61,7 +61,7 @@ hover:boolean=false;
      
       "handle":true,
       "category": FieldCategory.Layout,
-      "designclass":"btn-bitbucket",
+      "designclass":"btn-google",
       isContainer:true,
       "childs":[
           {
@@ -84,10 +84,10 @@ hover:boolean=false;
     },
     {
       "type": "panelbox",
-      "icon": "fa-columns",
+      "icon": "fa-window-maximize",
       "label": "Panel Box",
         "minimizebutton":true,
-
+        "designclass":"btn-twitter",
      
       "handle":true,
       "category": FieldCategory.Layout,
@@ -97,15 +97,15 @@ hover:boolean=false;
     },
     {
       "type": "tabcontainer",
-      "icon": "fa-columns",
-      "label": "Deneme Tabs",
+      "icon": "fa-window-restore",
+      "label": "Tabs",
       
       "className": "form-control",
       "subtype": "text",
      
       "handle":true,
       "category": FieldCategory.Layout,
-      "designclass":"btn-bitbucket",
+      "designclass":"btn-facebook",
       isContainer:true,
       "childs":[
           {
@@ -126,6 +126,8 @@ hover:boolean=false;
     
     ],
     },
+/*
+
     {
       "type": "email",
       "icon": "fa-envelope",
@@ -140,7 +142,7 @@ hover:boolean=false;
       "handle":true,
       
       "category": FieldCategory.Advanced,
-      "designclass":"btn-linkedin",
+      "designclass":"",
     },
     {
       "type": "phone",
@@ -154,7 +156,7 @@ hover:boolean=false;
       "errorText": "Please enter a valid phone number",
       "handle":true,
       "category": FieldCategory.Advanced,
-      "designclass":"btn-github",
+      "designclass":"",
     },
     {
       "type": "number",
@@ -167,7 +169,7 @@ hover:boolean=false;
       "min": 12,
       "max": 90,
       "category": FieldCategory.Basic,
-      "designclass":"btn-dropbox",
+      "designclass":"",
     },
     {
       "type": "datetime",
@@ -272,7 +274,7 @@ hover:boolean=false;
       "icon":"fa-paper-plane",
       "subtype": "submit",
       "label": "Submit"
-    }
+    }*/
   ];
   modelFields:Array<GlobalField>=[];
   model:any = {
@@ -494,6 +496,14 @@ arrayUpdate( list:Array<GlobalField>, field:GlobalField){
     // },error=>{
     //   swal('Error',error.message,'error');
     // });
+  }
+  openSettingsForm(item){
+
+    this.currentGlobalField=item;
+    this.currentGlobalFieldJson=JSON.stringify(this.currentGlobalField, null, 4);
+    this.fieldSettingForm.setValue({jsontext:this.currentGlobalFieldJson});
+    this.display='block'; 
+
   }
 
 

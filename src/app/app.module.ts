@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormCreateComponent } from './pages/form-create/form-create.component';
 import { DndModule } from 'ngx-drag-drop';
 import { ReactiveFormsModule } from "@angular/forms";
+import { CegTexteditorComponent } from './pages/form-create/ceg-texteditor/ceg-texteditor.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     AppfooterComponent,
     AppsettingComponent,
     DashboardComponent,
-    FormCreateComponent
+    FormCreateComponent,
+    CegTexteditorComponent
   ],
   imports: [
     BrowserModule,

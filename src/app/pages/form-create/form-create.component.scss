@@ -2,7 +2,16 @@
     
     display: inline-block;
     float:right;
+    
 }
+.row-settingbutton{
+    position: absolute;right: 0;top: 0;z-index: 1000;margin-top: -6px; 
+}
+.custom-row{
+position: relative;
+
+}
+.custom-column:empty{border: dotted 1px #e8e8e8}
 .dndPlaceholder{
     background-color: #CFE8F5;
     border-radius: 4px;
@@ -12,4 +21,7 @@
 }
 > ul[dnd-list] > div.dndPlaceholder > div {
     
+}
+.rowmousehover{
+    border: dotted 1px #e8e8e8
 }

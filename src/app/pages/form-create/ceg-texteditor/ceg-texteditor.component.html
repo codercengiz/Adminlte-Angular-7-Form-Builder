@@ -1,0 +1,15 @@
+<div>
+  <label>{{item.label}}</label> <label *ngIf="item.required" class="text-danger">*</label>
+
+  <div class="field-setting-button" [ngStyle]="{visibility: hover==true  ? 'visible' : 'hidden' }">
+    <a class="btn btn-social-icon " style="height: 24px; width:24px"><i class="fa fa-trash"
+        style="line-height: 24px; font-size: 0.8em;"></i></a>
+    <a class="btn btn-social-icon " style="height: 24px; width:24px"><i class="fa fa-cog"
+        style="line-height: 24px; font-size: 0.8em;"></i></a>
+    <a class="btn btn-social-icon " style="height: 24px; width:24px"><i class="fa fa-ellipsis-v dndHandle" dndHandle
+        style="line-height: 24px; font-size: 0.8em;"></i></a>
+
+  </div>
+
+</div>
+<input type="text" class="form-control" id="{{item.name}}" placeholder="{{item.placeholder}}">
