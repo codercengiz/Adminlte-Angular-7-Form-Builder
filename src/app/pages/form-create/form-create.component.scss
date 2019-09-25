@@ -1,3 +1,4 @@
+
  .field-setting-button{
     
     display: inline-block;
@@ -24,4 +25,7 @@ position: relative;
 }
 .rowmousehover{
     border: dotted 1px #e8e8e8
+}
+ng-select2 > span{
+    width: 100% !important
 }

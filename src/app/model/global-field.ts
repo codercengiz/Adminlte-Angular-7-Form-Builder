@@ -23,6 +23,8 @@ export class GlobalField {
     category?: FieldCategory=FieldCategory.Basic;
     isContainer?:boolean=false;
     childs?:Array<GlobalField>;
+    items?:any;
+    options?:any;
 
     
     //panel box

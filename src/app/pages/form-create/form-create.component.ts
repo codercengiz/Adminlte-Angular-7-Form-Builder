@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
 import {  GlobalField, FieldsValue , FieldCategory } from 'src/app/model/global-field';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
@@ -8,19 +8,28 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angul
 @Component({
   selector: 'app-form-create',
   templateUrl: './form-create.component.html',
-  styleUrls: ['./form-create.component.scss']
+  styleUrls: ['./form-create.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FormCreateComponent implements OnInit {
+  
+ 
+  
+
   customForm  = new FormGroup({
     
   });
-  
+   
   
   fieldSettingForm = new FormGroup({
     jsontext: new FormControl(''),
   });
   
-  constructor() { }
+  constructor(private _elementRef : ElementRef) {
+
+    
+
+   }
 
   ngOnInit() {
     
@@ -126,6 +135,69 @@ hover:boolean=false;
     
     ],
     },
+    {
+      "type": "datetime",
+      "icon":"fa-calendar",
+      "label": "Date",
+      "placeholder": "Date",
+      "className": "form-control",
+      "category": FieldCategory.Basic,
+      "designclass":"btn-facebook",
+    },
+    {
+      "type": "colorpicker",
+      "icon":"fa-braille",
+      "label": "Color Picker",
+      "placeholder": "Color Picker",
+      "className": "form-control",
+      "category": FieldCategory.Basic,
+      "designclass":"btn-twitter",
+    },
+    {
+      "type": "selectbox",
+      "icon":"fa-list-alt",
+      "label": "Select Box",
+      "placeholder": "",
+      "className": "form-control",
+      "category": FieldCategory.Basic,
+      "designclass":"btn-google",
+      "items":[
+        {id:"1", text:"Berlin"},
+        {id:"2", text:"Köln"},
+        {id:"3", text:"Hannover"},
+        {id:"4", text:"Münschen"},
+        {id:"5", text:"Hamburg"},
+        {id:"6", text:"Bremen"},
+        {id:"7", text:"Osnabrück"},
+        {id:"8", text:"Kiel"}]
+
+    },
+    {
+      "type": "selectboxmulti",
+      "icon":"fa-th-list",
+      "label": "Multi Select Box",
+      "placeholder": "",
+      "className": "form-control",
+      "category": FieldCategory.Basic,
+      "designclass":"btn-linkedin",
+      "value":["2","3"],
+      "options":{width: '300',
+                multiple: true,
+                tags: true},
+      "items":[
+        {id:"1", text:"Berlin"},
+        {id:"2", text:"Köln"},
+        {id:"3", text:"Hannover"},
+        {id:"4", text:"Münschen"},
+        {id:"5", text:"Hamburg"},
+        {id:"6", text:"Bremen"},
+        {id:"7", text:"Osnabrück"},
+        {id:"8", text:"Kiel"}]
+
+    },
+
+
+
 /*
 
     {
@@ -171,15 +243,7 @@ hover:boolean=false;
       "category": FieldCategory.Basic,
       "designclass":"",
     },
-    {
-      "type": "datetime",
-      "icon":"fa-calendar",
-      "label": "Date",
-      "placeholder": "Date",
-      "className": "form-control",
-      "category": FieldCategory.Basic,
-      "designclass":"btn-facebook",
-    },
+    
     {
       "type": "time",
       "icon":"fa-clock",
@@ -305,6 +369,7 @@ hover:boolean=false;
   
   onDraggableLinked(event:DragEvent) {
     console.log("draggable linked", JSON.stringify(event, null, 2));
+    
   }
     
    onDragged( item:any, list:any[], effect:DropEffect ) {
@@ -505,6 +570,6 @@ arrayUpdate( list:Array<GlobalField>, field:GlobalField){
     this.display='block'; 
 
   }
-
+   
 
 }

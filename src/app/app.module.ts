@@ -10,8 +10,9 @@ import { AppsettingComponent } from './appsetting/appsetting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormCreateComponent } from './pages/form-create/form-create.component';
 import { DndModule } from 'ngx-drag-drop';
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CegTexteditorComponent } from './pages/form-create/ceg-texteditor/ceg-texteditor.component';
+import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,8 @@ import { CegTexteditorComponent } from './pages/form-create/ceg-texteditor/ceg-t
     DragDropModule,
     DndModule,
     ReactiveFormsModule,
+    FormsModule,
+    NgSelect2Module
   ],
   providers: [],
   bootstrap: [AppComponent]
