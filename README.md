@@ -2,6 +2,10 @@
 # Nested Form
 ![2019-09-24_22-29-15](https://user-images.githubusercontent.com/45819755/65548419-b4169280-df1b-11e9-9c51-e8f2c6a0d4ab.jpg)
 
+# 
+![angular form builder](https://user-images.githubusercontent.com/45819755/65797759-5038d780-e170-11e9-90a4-63185461f471.gif)
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
 ## Development server
