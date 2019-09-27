@@ -3,6 +3,7 @@ import {  GlobalField, FieldsValue , FieldCategory } from 'src/app/model/global-
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ViewChild, AfterViewInit } from '@angular/core';
 
 
 @Component({
@@ -11,10 +12,10 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angul
   styleUrls: ['./form-create.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
+
 export class FormCreateComponent implements OnInit {
   
- 
-  
+   
 
   customForm  = new FormGroup({
     
@@ -63,7 +64,7 @@ hover:boolean=false;
     {
       "type": "row",
       "icon": "fa-columns",
-      "label": "Column",
+      "label": "Column 1x2",
       
       "className": "form-control",
       "subtype": "text",
@@ -84,6 +85,148 @@ hover:boolean=false;
           {
           "type": "column",
           "className":"col-md-6",
+          
+          isContainer:true,
+          "childs":[],
+          }
+    
+    ],
+    },
+    {
+      "type": "row",
+      "icon": "fa-columns",
+      "label": "Column 1x3",
+      
+      "className": "form-control",
+      "subtype": "text",
+     
+      "handle":true,
+      "category": FieldCategory.Layout,
+      "designclass":"btn-twitter",
+      isContainer:true,
+      "childs":[
+          {
+          "type": "column",
+            "className":"col-md-4",
+         
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-4",
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-4",
+          
+          isContainer:true,
+          "childs":[],
+          }
+    
+    ],
+    },
+    {
+      "type": "row",
+      "icon": "fa-columns",
+      "label": "Column 1x4",
+      
+      "className": "form-control",
+      "subtype": "text",
+     
+      "handle":true,
+      "category": FieldCategory.Layout,
+      "designclass":"btn-instagram",
+      isContainer:true,
+      "childs":[
+          {
+          "type": "column",
+            "className":"col-md-3",
+         
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-3",
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-3",
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-3",
+          
+          isContainer:true,
+          "childs":[],
+          }
+    
+    ],
+    },
+    {
+      "type": "row",
+      "icon": "fa-columns",
+      "label": "Column 1x6",
+      
+      "className": "form-control",
+      "subtype": "text",
+     
+      "handle":true,
+      "category": FieldCategory.Layout,
+      "designclass":"btn-facebook",
+      isContainer:true,
+      "childs":[
+          {
+          "type": "column",
+            "className":"col-md-2",
+         
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-2",
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-2",
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-2",
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-2",
+          
+          isContainer:true,
+          "childs":[],
+          },
+          {
+          "type": "column",
+          "className":"col-md-2",
           
           isContainer:true,
           "childs":[],
@@ -570,6 +713,15 @@ arrayUpdate( list:Array<GlobalField>, field:GlobalField){
     this.display='block'; 
 
   }
+  /*
+  datepickerload(){
+    console.log($('.datepicker'));
+    $('.datepicker').datepicker();
+  }
+  colorpickerload(){
+    console.log($('.my-colorpicker1'));
+    $('.my-colorpicker1').colorpicker();
+  }*/
    
 
 }

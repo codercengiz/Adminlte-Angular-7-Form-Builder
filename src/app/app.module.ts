@@ -13,6 +13,8 @@ import { DndModule } from 'ngx-drag-drop';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CegTexteditorComponent } from './pages/form-create/ceg-texteditor/ceg-texteditor.component';
 import { NgSelect2Module } from 'ng-select2';
+import { ColorPickerModule } from 'ngx-color-picker';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { NgSelect2Module } from 'ng-select2';
     DndModule,
     ReactiveFormsModule,
     FormsModule,
-    NgSelect2Module
+    NgSelect2Module,
+    ColorPickerModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
